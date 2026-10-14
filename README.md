@@ -43,15 +43,19 @@ pip install -r requirements.txt
 playwright install chromium
 
 # 4. Run
-python run_poc.py                # all 3 use cases, headless
+python run_poc.py                # all use cases, headless (sequential)
 python run_poc.py --headed       # watch the browser (better for demos)
 python run_poc.py --only UC2     # single use case
+python run_poc.py --parallel usecases --workers 3   # tests within each YAML in parallel
+python run_poc.py --parallel files                  # YAML files in parallel
+python run_poc.py --parallel all --workers 2        # all use cases in one pool
 ```
 
 `.env` knobs: `NVIDIA_API_KEY`, `NIM_MODEL`, `NIM_BASE_URL`, `HEADLESS`,
-`SLOW_MO` (set `SLOW_MO=500` for stakeholder demos so actions are visible).
-Real environment variables override `.env`. Never commit `.env` — it is
-already in `.gitignore`.
+`SLOW_MO` (set `SLOW_MO=500` for stakeholder demos so actions are visible),
+`PARALLEL_MODE` (`off` / `files` / `usecases` / `all`), `PARALLEL_WORKERS`.
+CLI `--parallel` / `--workers` override the env values. Real environment
+variables override `.env`. Never commit `.env` — it is already in `.gitignore`.
 
 ### Switch to fully local (air-gapped) mode
 

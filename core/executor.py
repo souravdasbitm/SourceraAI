@@ -124,7 +124,10 @@ class Executor:
                     failed = True
                     try:
                         REPORT_DIR.mkdir(exist_ok=True)
-                        page.screenshot(path=str(REPORT_DIR / "failure.png"))
+                        test_name = plan.get("test_name", "unnamed")
+                        page.screenshot(
+                            path=str(REPORT_DIR / f"{test_name}_failure.png")
+                        )
                     except Exception:
                         pass
                     break
