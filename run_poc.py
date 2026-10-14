@@ -1,5 +1,5 @@
 """
-OpenQA POC orchestrator.
+SourceaAI orchestrator.
 Flow per use case:  YAML (English) -> Planner LLM -> Playwright Executor
                     -> Validator LLM -> Markdown + JSON report
 
@@ -39,7 +39,7 @@ def _log(msg: str = "") -> None:
 
 
 def render_markdown(results: list) -> str:
-    lines = [f"# OpenQA POC Report - {datetime.now():%Y-%m-%d %H:%M}",
+    lines = [f"# SourceaAI Report - {datetime.now():%Y-%m-%d %H:%M}",
              "", "Engine: NVIDIA Build (NIM) | Runner: Playwright | Pattern: Plan -> Execute -> Validate", ""]
     for r in results:
         v = r["validation"]
@@ -223,7 +223,7 @@ def run_usecases_parallel(
 
 
 def main():
-    ap = argparse.ArgumentParser(description="OpenQA POC — plan / execute / validate")
+    ap = argparse.ArgumentParser(description="SourceaAI — plan / execute / validate")
     ap.add_argument("--headed", action="store_true", help="run with visible browser")
     ap.add_argument("--only", help="run use cases by name prefix, e.g. UC2")
     ap.add_argument(

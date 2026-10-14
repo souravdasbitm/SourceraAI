@@ -1,4 +1,4 @@
-# OpenQA POC — LLM-Driven Test Automation with NVIDIA Build (NIM)
+# SourceaAI — LLM-Driven Test Automation with NVIDIA Build (NIM)
 
 Natural-language test cases -> AI-generated Playwright plans -> live execution
 with AI self-healing locators -> AI semantic validation -> report.

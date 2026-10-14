@@ -1,4 +1,4 @@
-name: OpenQA POC - AI-Driven Amazon Tests
+name: SourceaAI - AI-Driven Amazon Tests
 
 on:
   workflow_dispatch:            # manual "Run workflow" button with inputs
