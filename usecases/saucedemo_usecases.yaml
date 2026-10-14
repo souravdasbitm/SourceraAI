@@ -1,0 +1,63 @@
+# Sauce Labs demo (https://www.saucedemo.com) — plain-English use cases.
+# Public demo credentials: standard_user / secret_sauce
+# The planner LLM turns each into an executable Playwright action plan;
+# the validator LLM judges the captured data against the validations.
+
+- name: SD1_Valid_Login
+  objective: Verify that a valid Sauce Demo user can log in and see the product inventory
+  steps:
+    - Open https://www.saucedemo.com
+    - Type "standard_user" into the Username field
+    - Type "secret_sauce" into the Password field
+    - Click the Login button
+    - Wait for the inventory page to load (product list visible)
+    - Extract the visible product titles (save as product_titles)
+    - Take a screenshot named sd1_inventory
+  capture: product_titles (list)
+  validations:
+    - At least 6 product titles were returned
+    - The list includes "Sauce Labs Backpack"
+    - Every product title is non-empty text related to a Sauce Labs catalog item
+
+- name: SD2_Sort_By_Price_Low_To_High
+  objective: Verify that sorting inventory by Price (low to high) orders prices ascending
+  steps:
+    - Open https://www.saucedemo.com
+    - Log in with username "standard_user" and password "secret_sauce"
+    - Wait for the inventory page to load
+    - Select the sort option "lohi" (Price low to high) from the product sort dropdown
+    - Wait for the inventory to re-sort
+    - Extract the visible product prices (save as sorted_prices)
+    - Extract the visible product titles (save as sorted_titles)
+    - Take a screenshot named sd2_sorted_inventory
+  capture: sorted_prices (list), sorted_titles (list)
+  validations:
+    - At least 6 prices were captured
+    - The captured prices are in non-decreasing (ascending) order when parsed as dollar amounts (e.g. $7.99, $9.99, $15.99)
+    - The first listed product after sorting is a plausible cheapest item (price is the minimum among sorted_prices)
+
+- name: SD3_Add_To_Cart_And_Checkout
+  objective: Verify a product can be added to the cart and the checkout completes successfully
+  steps:
+    - Open https://www.saucedemo.com
+    - Log in with username "standard_user" and password "secret_sauce"
+    - Wait for the inventory page to load
+    - Click Add to cart for "Sauce Labs Backpack"
+    - Extract the cart badge count (save as cart_count)
+    - Open the shopping cart
+    - Extract the cart item title(s) (save as cart_items)
+    - Click Checkout
+    - Fill First Name "Open", Last Name "QA", Postal Code "560001"
+    - Click Continue
+    - Wait for the checkout overview page
+    - Extract the item total text (save as item_total)
+    - Click Finish
+    - Wait for the order confirmation page
+    - Extract the completion header text (save as complete_header)
+    - Take a screenshot named sd3_checkout_complete
+  capture: cart_count, cart_items (list), item_total, complete_header
+  validations:
+    - cart_count equals "1" (or the number 1)
+    - cart_items includes "Sauce Labs Backpack"
+    - item_total mentions 29.99 (the Backpack price)
+    - complete_header contains "Thank you for your order" (case-insensitive OK)

@@ -28,6 +28,26 @@ Amazon.in selector hints (prefer these, they are stable):
 - Sort dropdown: select#s-result-sort-select  (use action "select" NOT click: {"action":"select","selector":"select#s-result-sort-select","value":"price-asc-rank"})
 - Cart page item titles: div.sc-list-item-content span.a-truncate-cut
 
+SauceDemo (https://www.saucedemo.com) selector hints (prefer these, they are stable):
+- Username: #user-name
+- Password: #password
+- Login button: #login-button
+- Inventory titles: .inventory_item_name
+- Inventory prices: .inventory_item_price
+- Sort dropdown: select.product_sort_container  (use action "select"; value "lohi" = price low→high, "hilo" = high→low, "az", "za")
+- Add Sauce Labs Backpack: #add-to-cart-sauce-labs-backpack
+- Cart badge: .shopping_cart_badge
+- Cart link: .shopping_cart_link
+- Cart item titles: .inventory_item_name  (also on cart page)
+- Checkout: #checkout
+- First name: #first-name
+- Last name: #last-name
+- Postal code: #postal-code
+- Continue: #continue
+- Item total: .summary_subtotal_label
+- Finish: #finish
+- Complete header: .complete-header
+
 Rules:
 - Always start with goto and end with a screenshot.
 - Add wait_for before extracting or clicking dynamic content.
