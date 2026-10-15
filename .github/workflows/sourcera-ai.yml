@@ -12,6 +12,9 @@ on:
   # NOTE: deliberately NOT on push/PR - free-tier LLM quota + Amazon scraping
   # on every commit is wasteful and rude. Trigger manually or on schedule.
 
+permissions:
+  contents: write
+
 jobs:
   openqa:
     runs-on: ubuntu-latest
@@ -21,6 +24,8 @@ jobs:
       NIM_MODEL: meta/llama-3.2-11b-vision-instruct
       NIM_BASE_URL: https://integrate.api.nvidia.com/v1
       HEADLESS: "true"
+      PLAN_MEMORY: "on"
+      PLAN_TTL_DAYS: "0"
 
     steps:
       - name: Checkout
@@ -46,6 +51,25 @@ jobs:
           else
             python run_poc.py --only "${{ github.event.inputs.use_case }}"
           fi
+
+      - name: Save plan memory to the branch
+        if: always()
+        run: |
+          shopt -s nullglob
+          files=(.openqa/plans/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No plan files to save."
+            exit 0
+          fi
+          git add -- "${files[@]}"
+          if git diff --cached --quiet; then
+            echo "Plan memory unchanged."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Update plan memory from CI."
+          git push origin HEAD:"${GITHUB_REF_NAME}"
 
       - name: Upload reports (always)
         if: always()

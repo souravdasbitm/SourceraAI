@@ -1,0 +1,1278 @@
+{
+  "app_version": "",
+  "entries": {
+    "aab5f40519ab54dc3e2d257172096113c841bb36270959b2e58cab396e9558c0": {
+      "key": "aab5f40519ab54dc3e2d257172096113c841bb36270959b2e58cab396e9558c0",
+      "step_text": "Open https://www.amazon.in",
+      "normalized_step": "open https://www.amazon.in",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "goto",
+          "url": "https://www.amazon.in",
+          "description": "Open https://www.amazon.in"
+        }
+      ],
+      "version": 1,
+      "pass_count": 11,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:06+00:00",
+      "last_pass_at": "2026-10-14T13:19:11+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "ea34dd467891bbe61f23dfdf21e9460d15a2160c3136aeb32673f62a15cecb6a": {
+      "key": "ea34dd467891bbe61f23dfdf21e9460d15a2160c3136aeb32673f62a15cecb6a",
+      "step_text": "Search for \"{q1}\" and press Enter",
+      "normalized_step": "search for {q1} and press enter",
+      "page_fingerprint": "/|3991bd286849a08c",
+      "plan": [
+        {
+          "action": "fill",
+          "selector": "#twotabsearchtextbox",
+          "value": "{q1}",
+          "description": "Search for \"{q1}\" and press Enter"
+        },
+        {
+          "action": "press",
+          "selector": "#nav-search-submit-button",
+          "key": "Enter",
+          "description": "Search for \"{q1}\" and press Enter"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:12+00:00",
+      "last_pass_at": "2026-10-14T12:00:12+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "2327120d90d653959c66f7f7a10e158062a5984a327132c8d10dcc9317c0e05f": {
+      "key": "2327120d90d653959c66f7f7a10e158062a5984a327132c8d10dcc9317c0e05f",
+      "step_text": "Wait for results to load",
+      "normalized_step": "wait for results to load",
+      "page_fingerprint": "/s/ref=nb_sb_noss|86033f842fb6144c",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#searchDropdownBox",
+          "description": "Wait for results to load"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:15+00:00",
+      "last_pass_at": "2026-10-14T12:00:15+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "cc34933394b41d0728dad666926cbd073f0e2996963708c706bfa6213679d0c8": {
+      "key": "cc34933394b41d0728dad666926cbd073f0e2996963708c706bfa6213679d0c8",
+      "step_text": "Select the sort option \"{q1}\" from the sort dropdown",
+      "normalized_step": "select the sort option {q1} from the sort dropdown",
+      "page_fingerprint": "/s|af1a51f40a6bfa16",
+      "plan": [
+        {
+          "action": "select",
+          "selector": "#searchDropdownBox",
+          "value": "All Categories",
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:18+00:00",
+      "last_pass_at": "2026-10-14T12:00:18+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "cfdef22e4c1d836f2c9d57a9a72e331c701840f8cc0cc7565a9eab12155e11ec": {
+      "key": "cfdef22e4c1d836f2c9d57a9a72e331c701840f8cc0cc7565a9eab12155e11ec",
+      "step_text": "Wait for the re-sorted results to load",
+      "normalized_step": "wait for the re-sorted results to load",
+      "page_fingerprint": "/s|af1a51f40a6bfa16",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#searchDropdownBox",
+          "description": "Wait for the re-sorted results to load"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:20+00:00",
+      "last_pass_at": "2026-10-14T12:00:20+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "d2008e241169b16b3ed13b06d9120c88d7bd93e91107353e55850dae0d75e8cb": {
+      "key": "d2008e241169b16b3ed13b06d9120c88d7bd93e91107353e55850dae0d75e8cb",
+      "step_text": "Extract the prices of the first visible results (save as sorted_prices)",
+      "normalized_step": "extract the prices of the first visible results (save as sorted_prices)",
+      "page_fingerprint": "/s|af1a51f40a6bfa16",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#searchDropdownBox",
+          "all": false,
+          "save_as": "sorted_prices",
+          "description": "Extract the prices of the first visible results (save as sorted_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:28+00:00",
+      "last_pass_at": "2026-10-14T12:00:28+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "9aa6c8003df16a75e15ee16daf3f513e46d0c582c21f2884d65a3e1dc463f868": {
+      "key": "9aa6c8003df16a75e15ee16daf3f513e46d0c582c21f2884d65a3e1dc463f868",
+      "step_text": "Take a screenshot named uc2_sorted_results",
+      "normalized_step": "take a screenshot named uc2_sorted_results",
+      "page_fingerprint": "/s|af1a51f40a6bfa16",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc2_sorted_results",
+          "description": "Take a screenshot named uc2_sorted_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:00:31+00:00",
+      "last_pass_at": "2026-10-14T12:00:31+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "a1a22a87455ebed48b98d82a325b52102716a4201c7492b34f53cdfe7950bd90": {
+      "key": "a1a22a87455ebed48b98d82a325b52102716a4201c7492b34f53cdfe7950bd90",
+      "step_text": "Type \"{q1}\" in the search box and press Enter",
+      "normalized_step": "type {q1} in the search box and press enter",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "fill",
+          "selector": "#challenge-container input",
+          "value": "{q1}",
+          "description": "Type \"{q1}\" in the search box and press Enter",
+          "fallback_selectors": [
+            "xpath=//input[@id='twotabsearchtextbox']"
+          ]
+        },
+        {
+          "action": "press",
+          "selector": "#challenge-container input",
+          "key": "Enter",
+          "description": "Type \"{q1}\" in the search box and press Enter"
+        }
+      ],
+      "version": 2,
+      "pass_count": 2,
+      "failure_count": 1,
+      "created_at": "2026-10-14T12:27:51+00:00",
+      "last_pass_at": "2026-10-14T12:57:07+00:00",
+      "source": "healed",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "0fd7ea84b3ea4b195ada71de084adcc38011ee9df6b1cca200b71fb0c6f5bcb9": {
+      "key": "0fd7ea84b3ea4b195ada71de084adcc38011ee9df6b1cca200b71fb0c6f5bcb9",
+      "step_text": "Wait for the search results to load",
+      "normalized_step": "wait for the search results to load",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#search",
+          "description": "Wait for the search results to load"
+        }
+      ],
+      "version": 1,
+      "pass_count": 4,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:27:54+00:00",
+      "last_pass_at": "2026-10-14T13:17:35+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "932cae78bbf680148e864f53e2636e513f486a3154430b1bbb4fb7ae4e9ef599": {
+      "key": "932cae78bbf680148e864f53e2636e513f486a3154430b1bbb4fb7ae4e9ef599",
+      "step_text": "Extract the titles of the visible search results (save as result_titles)",
+      "normalized_step": "extract the titles of the visible search results (save as result_titles)",
+      "page_fingerprint": "/s|2d5a55465948ce87",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#twotabsearchtextbox",
+          "description": "Extract the titles of the visible search results (save as result_titles)"
+        },
+        {
+          "action": "extract",
+          "selector": "body",
+          "all": true,
+          "save_as": "result_titles",
+          "description": "Extract the titles of the visible search results (save as result_titles)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:27:57+00:00",
+      "last_pass_at": "2026-10-14T12:27:57+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "910c66b8d73e92e3b9adafc23eee9fff2655eff8ce5a063f89e67a92b0a743c4": {
+      "key": "910c66b8d73e92e3b9adafc23eee9fff2655eff8ce5a063f89e67a92b0a743c4",
+      "step_text": "Extract the prices of the visible search results (save as result_prices)",
+      "normalized_step": "extract the prices of the visible search results (save as result_prices)",
+      "page_fingerprint": "/s|2d5a55465948ce87",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "body",
+          "all": true,
+          "save_as": "result_prices",
+          "description": "Extract the prices of the visible search results (save as result_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:02+00:00",
+      "last_pass_at": "2026-10-14T12:28:02+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "3b69e6223cc9f6ce31b8f99730dd92db6533aebca7d5e46b257ab995fc23c390": {
+      "key": "3b69e6223cc9f6ce31b8f99730dd92db6533aebca7d5e46b257ab995fc23c390",
+      "step_text": "Take a screenshot named uc1_search_results",
+      "normalized_step": "take a screenshot named uc1_search_results",
+      "page_fingerprint": "/s|2d5a55465948ce87",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc1_search_results",
+          "description": "Take a screenshot named uc1_search_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:10+00:00",
+      "last_pass_at": "2026-10-14T12:28:10+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "2dad5d3da4e9127d5eaef2430092978f2b73490ccba98b553d4cf9de13527bcc": {
+      "key": "2dad5d3da4e9127d5eaef2430092978f2b73490ccba98b553d4cf9de13527bcc",
+      "step_text": "Search for \"{q1}\" and press Enter",
+      "normalized_step": "search for {q1} and press enter",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "fill",
+          "selector": "#challenge-container input",
+          "value": "{q1}",
+          "description": "Search for \"{q1}\" and press Enter",
+          "fallback_selectors": [
+            "xpath=//input[@id='twotabsearchtextbox']"
+          ]
+        },
+        {
+          "action": "press",
+          "key": "Enter",
+          "selector": "input",
+          "description": "Search for \"{q1}\" and press Enter"
+        }
+      ],
+      "version": 6,
+      "pass_count": 6,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:36+00:00",
+      "last_pass_at": "2026-10-14T13:19:22+00:00",
+      "source": "healed",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "d34a0dca6835e3c23120739eab16df8c86938f4a43d5e2640c8a7a4ecbf3c380": {
+      "key": "d34a0dca6835e3c23120739eab16df8c86938f4a43d5e2640c8a7a4ecbf3c380",
+      "step_text": "Wait for results to load",
+      "normalized_step": "wait for results to load",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#search",
+          "description": "Wait for results to load"
+        }
+      ],
+      "version": 1,
+      "pass_count": 4,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:39+00:00",
+      "last_pass_at": "2026-10-14T13:18:42+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "cb6c22a41b94b7819d9bf11e212c0c94cf6e202f8ace20a4a907ec7278300b47": {
+      "key": "cb6c22a41b94b7819d9bf11e212c0c94cf6e202f8ace20a4a907ec7278300b47",
+      "step_text": "Select the sort option \"{q1}\" from the sort dropdown",
+      "normalized_step": "select the sort option {q1} from the sort dropdown",
+      "page_fingerprint": "/s|f6d00d607064dea6",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#search",
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        },
+        {
+          "action": "select",
+          "selector": "#s-result-sort-select_2",
+          "value": "{q1}",
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:51+00:00",
+      "last_pass_at": "2026-10-14T12:28:51+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "77478ec065a556ee413ab1f9e8fdfd8efcf53040c72f2c88133949138d70a89f": {
+      "key": "77478ec065a556ee413ab1f9e8fdfd8efcf53040c72f2c88133949138d70a89f",
+      "step_text": "Wait for the re-sorted results to load",
+      "normalized_step": "wait for the re-sorted results to load",
+      "page_fingerprint": "/s|b1d29e10b0438a18",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#searchDropdownBox",
+          "description": "Wait for the re-sorted results to load"
+        }
+      ],
+      "version": 1,
+      "pass_count": 3,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:53+00:00",
+      "last_pass_at": "2026-10-14T13:18:53+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "23aaae06aa2fc845a4cd664d5fd73c2fb2779a4e7c4df08591b551e0683aa130": {
+      "key": "23aaae06aa2fc845a4cd664d5fd73c2fb2779a4e7c4df08591b551e0683aa130",
+      "step_text": "Extract the prices of the first visible results (save as sorted_prices)",
+      "normalized_step": "extract the prices of the first visible results (save as sorted_prices)",
+      "page_fingerprint": "/s|5f373c4a22ba8e10",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#searchDropdownBox",
+          "all": false,
+          "save_as": "sorted_prices",
+          "description": "Extract the prices of the first visible results (save as sorted_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:55+00:00",
+      "last_pass_at": "2026-10-14T12:28:55+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "9bf9937b8804d071918a726053bc6f0b71ef72e53f337d1b8562410a586ea096": {
+      "key": "9bf9937b8804d071918a726053bc6f0b71ef72e53f337d1b8562410a586ea096",
+      "step_text": "Take a screenshot named uc2_sorted_results",
+      "normalized_step": "take a screenshot named uc2_sorted_results",
+      "page_fingerprint": "/s|5f373c4a22ba8e10",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc2_sorted_results",
+          "description": "Take a screenshot named uc2_sorted_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:28:58+00:00",
+      "last_pass_at": "2026-10-14T12:28:58+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "69c6dffac320329abcde010bd14ee4f04d17432c641d8b6e29c2afc0615cf907": {
+      "key": "69c6dffac320329abcde010bd14ee4f04d17432c641d8b6e29c2afc0615cf907",
+      "step_text": "Extract the current cart count badge (save as cart_before)",
+      "normalized_step": "extract the current cart count badge (save as cart_before)",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#challenge-container",
+          "all": false,
+          "save_as": "cart_before",
+          "description": "Extract the current cart count badge (save as cart_before)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 3,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:33:34+00:00",
+      "last_pass_at": "2026-10-14T13:19:11+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "a9547bef7f834a9ef136d1d93b38416c8ba5c78fb4b7114f9cbac49d185ba102": {
+      "key": "a9547bef7f834a9ef136d1d93b38416c8ba5c78fb4b7114f9cbac49d185ba102",
+      "step_text": "Search for \"{q1}\" and press Enter",
+      "normalized_step": "search for {q1} and press enter",
+      "page_fingerprint": "/|e6033bc46e91f4cc",
+      "plan": [
+        {
+          "action": "fill",
+          "selector": "#twotabsearchtextbox",
+          "value": "{q1}",
+          "description": "Search for \"{q1}\" and press Enter"
+        },
+        {
+          "action": "press",
+          "key": "Enter",
+          "selector": "input",
+          "description": "Search for \"{q1}\" and press Enter"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:33:56+00:00",
+      "last_pass_at": "2026-10-14T12:33:56+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "bd386fd5c8ce926047c6b8b5116e99b67c2aa0c1e9ea747f896c6694faa22902": {
+      "key": "bd386fd5c8ce926047c6b8b5116e99b67c2aa0c1e9ea747f896c6694faa22902",
+      "step_text": "Wait for results and click the first organic result title link",
+      "normalized_step": "wait for results and click the first organic result title link",
+      "page_fingerprint": "/|e3b0c44298fc1c14",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#search",
+          "description": "Wait for results and click the first organic result title link"
+        },
+        {
+          "action": "click",
+          "selector": "#nav-assistant-links-heading",
+          "description": "Wait for results and click the first organic result title link"
+        }
+      ],
+      "version": 1,
+      "pass_count": 3,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:01+00:00",
+      "last_pass_at": "2026-10-14T13:19:31+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "c20a02419c89451ec4cb149ae60dec1194a89f1fe47b1cdbf1bd8bc24898bba9": {
+      "key": "c20a02419c89451ec4cb149ae60dec1194a89f1fe47b1cdbf1bd8bc24898bba9",
+      "step_text": "Wait for the product page to load (add-to-cart button visible)",
+      "normalized_step": "wait for the product page to load (add-to-cart button visible)",
+      "page_fingerprint": "/moca-premium-leather-thinnest-protective/dp/b07cq1lysf/ref=sr_1_1_sspa|9cd44ba71949d17e",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#nav-assist-add-to-cart",
+          "description": "Wait for the product page to load (add-to-cart button visible)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:05+00:00",
+      "last_pass_at": "2026-10-14T12:34:05+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "0390aebde038a19a60abcf5b146b6e0af8ecc087199ae85a1d39122977a37eb8": {
+      "key": "0390aebde038a19a60abcf5b146b6e0af8ecc087199ae85a1d39122977a37eb8",
+      "step_text": "Extract the product title on the product page (save as product_title)",
+      "normalized_step": "extract the product title on the product page (save as product_title)",
+      "page_fingerprint": "/moca-premium-leather-thinnest-protective/dp/b07cq1lysf/ref=sr_1_1_sspa|c488bdd870d14f56",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "h1#title",
+          "all": false,
+          "save_as": "product_title",
+          "description": "Extract the product title on the product page (save as product_title)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:07+00:00",
+      "last_pass_at": "2026-10-14T12:34:07+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "4349230f2c8c8d0a5869aad6c9907b18d5af7c15ab7c03a13b5306a491fef6fc": {
+      "key": "4349230f2c8c8d0a5869aad6c9907b18d5af7c15ab7c03a13b5306a491fef6fc",
+      "step_text": "Click the Add to Cart button",
+      "normalized_step": "click the add to cart button",
+      "page_fingerprint": "/moca-premium-leather-thinnest-protective/dp/b07cq1lysf/ref=sr_1_1_sspa|c488bdd870d14f56",
+      "plan": [
+        {
+          "action": "click",
+          "selector": "#nav-assist-add-to-cart",
+          "description": "Click the Add to Cart button"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:12+00:00",
+      "last_pass_at": "2026-10-14T12:34:12+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "0e403dce605438c0ff38007f1b4f6047ceb05d938b0c2f80689f4e39a364e724": {
+      "key": "0e403dce605438c0ff38007f1b4f6047ceb05d938b0c2f80689f4e39a364e724",
+      "step_text": "Wait {n1} seconds for the cart to update",
+      "normalized_step": "wait {n1} seconds for the cart to update",
+      "page_fingerprint": "/cart/add-to-cart/ref=dp_start-bbf_1_glance|f0b2e420496e34ce",
+      "plan": [
+        {
+          "action": "wait",
+          "seconds": 4,
+          "description": "Wait {n1} seconds for the cart to update"
+        }
+      ],
+      "version": 1,
+      "pass_count": 2,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:17+00:00",
+      "last_pass_at": "2026-10-14T13:19:55+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "4cb922235529c1115328a8f02d39795948ebb478e0ca4b6914927265a18a4276": {
+      "key": "4cb922235529c1115328a8f02d39795948ebb478e0ca4b6914927265a18a4276",
+      "step_text": "Extract the cart count badge (save as cart_after)",
+      "normalized_step": "extract the cart count badge (save as cart_after)",
+      "page_fingerprint": "/cart/smart-wagon|f3e73fafc533cd84",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#nav-cart-count-container",
+          "all": false,
+          "save_as": "cart_after",
+          "description": "Extract the cart count badge (save as cart_after)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:19+00:00",
+      "last_pass_at": "2026-10-14T12:34:19+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "40d70c510e0a3abc5fa28f58e0e65a89b6b62695d374acf09b961d116e2b3587": {
+      "key": "40d70c510e0a3abc5fa28f58e0e65a89b6b62695d374acf09b961d116e2b3587",
+      "step_text": "Take a screenshot named uc3_cart",
+      "normalized_step": "take a screenshot named uc3_cart",
+      "page_fingerprint": "/cart/smart-wagon|f3e73fafc533cd84",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc3_cart",
+          "description": "Take a screenshot named uc3_cart"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:34:23+00:00",
+      "last_pass_at": "2026-10-14T12:34:23+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "b4a104578875b897f761ba480820ead7044fa44c45ef39e568c4bdc1b2be5985": {
+      "key": "b4a104578875b897f761ba480820ead7044fa44c45ef39e568c4bdc1b2be5985",
+      "step_text": "Extract the titles of the visible search results (save as result_titles)",
+      "normalized_step": "extract the titles of the visible search results (save as result_titles)",
+      "page_fingerprint": "/s|8808e71e17bee48c",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "body",
+          "all": true,
+          "save_as": "result_titles",
+          "description": "Extract the titles of the visible search results (save as result_titles)"
+        }
+      ],
+      "version": 2,
+      "pass_count": 2,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:57:11+00:00",
+      "last_pass_at": "2026-10-14T13:00:09+00:00",
+      "source": "replan",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "dc83d3788d4e71f06034b28aa95eeb8ef97d9a1c8576fd03f6ebd4c884a023ee": {
+      "key": "dc83d3788d4e71f06034b28aa95eeb8ef97d9a1c8576fd03f6ebd4c884a023ee",
+      "step_text": "Extract the prices of the visible search results (save as result_prices)",
+      "normalized_step": "extract the prices of the visible search results (save as result_prices)",
+      "page_fingerprint": "/s|c58e2f256597bc9f",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "body",
+          "all": true,
+          "save_as": "result_prices",
+          "description": "Extract the prices of the visible search results (save as result_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:57:16+00:00",
+      "last_pass_at": "2026-10-14T12:57:16+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "bdd2301314acdd9b2b8d47f1be5dbed9705a17b0c028510595ef3be63466f0c8": {
+      "key": "bdd2301314acdd9b2b8d47f1be5dbed9705a17b0c028510595ef3be63466f0c8",
+      "step_text": "Take a screenshot named uc1_search_results",
+      "normalized_step": "take a screenshot named uc1_search_results",
+      "page_fingerprint": "/s|c58e2f256597bc9f",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc1_search_results",
+          "description": "Take a screenshot named uc1_search_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:57:17+00:00",
+      "last_pass_at": "2026-10-14T12:57:17+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "e939c24403c70dfb56ef073e5fb301754bea61c245833a9bcef339bec89a0399": {
+      "key": "e939c24403c70dfb56ef073e5fb301754bea61c245833a9bcef339bec89a0399",
+      "step_text": "Select the sort option \"{q1}\" from the sort dropdown",
+      "normalized_step": "select the sort option {q1} from the sort dropdown",
+      "page_fingerprint": "/s|b1115320fcc3394c",
+      "plan": [
+        {
+          "action": "select",
+          "selector": "select",
+          "value": "{q1}",
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:57:11+00:00",
+      "last_pass_at": "2026-10-14T12:57:11+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "ea612df74bfe2b4b11fac200cd34a1cb0b6cd9413bbb8d7a35095483c94e5933": {
+      "key": "ea612df74bfe2b4b11fac200cd34a1cb0b6cd9413bbb8d7a35095483c94e5933",
+      "step_text": "Extract the prices of the first visible results (save as sorted_prices)",
+      "normalized_step": "extract the prices of the first visible results (save as sorted_prices)",
+      "page_fingerprint": "/s|b1d29e10b0438a18",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#searchDropdownBox",
+          "all": false,
+          "save_as": "sorted_prices",
+          "description": "Extract the prices of the first visible results (save as sorted_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:57:13+00:00",
+      "last_pass_at": "2026-10-14T12:57:13+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "0737d10287075fd8732d1ada63e9552cd0953469c6c6fd467168262435557fb3": {
+      "key": "0737d10287075fd8732d1ada63e9552cd0953469c6c6fd467168262435557fb3",
+      "step_text": "Take a screenshot named uc2_sorted_results",
+      "normalized_step": "take a screenshot named uc2_sorted_results",
+      "page_fingerprint": "/s|1979179ca4490900",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc2_sorted_results",
+          "description": "Take a screenshot named uc2_sorted_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T12:57:16+00:00",
+      "last_pass_at": "2026-10-14T12:57:16+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "e5c23cce51b8fff6d16b8cf38316c28d8399b504a447aa00d0ccbaa186c0111f": {
+      "key": "e5c23cce51b8fff6d16b8cf38316c28d8399b504a447aa00d0ccbaa186c0111f",
+      "step_text": "Type \"{q1}\" in the search box and press Enter",
+      "normalized_step": "type {q1} in the search box and press enter",
+      "page_fingerprint": "/|522b667837ea0b8e",
+      "plan": [
+        {
+          "action": "fill",
+          "selector": "#twotabsearchtextbox",
+          "value": "{q1}",
+          "description": "Type \"{q1}\" in the search box and press Enter"
+        },
+        {
+          "action": "press",
+          "selector": "#nav-search-submit-button",
+          "key": "Enter",
+          "description": "Type \"{q1}\" in the search box and press Enter"
+        }
+      ],
+      "version": 1,
+      "pass_count": 2,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:00:04+00:00",
+      "last_pass_at": "2026-10-14T13:17:34+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "99720bca07d5dcab9337b8bae25290f98e4775e5b87871b25f4d669680dd0091": {
+      "key": "99720bca07d5dcab9337b8bae25290f98e4775e5b87871b25f4d669680dd0091",
+      "step_text": "Extract the prices of the visible search results (save as result_prices)",
+      "normalized_step": "extract the prices of the visible search results (save as result_prices)",
+      "page_fingerprint": "/s|fe3a7bb8cdcb55b6",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "body",
+          "all": true,
+          "save_as": "result_prices",
+          "description": "Extract the prices of the visible search results (save as result_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:00:20+00:00",
+      "last_pass_at": "2026-10-14T13:00:20+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "c6c46c5f96c4062313d31e916b4ac67a19f5444194ccba921bf20f8997b5038c": {
+      "key": "c6c46c5f96c4062313d31e916b4ac67a19f5444194ccba921bf20f8997b5038c",
+      "step_text": "Take a screenshot named uc1_search_results",
+      "normalized_step": "take a screenshot named uc1_search_results",
+      "page_fingerprint": "/s|fe3a7bb8cdcb55b6",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc1_search_results",
+          "description": "Take a screenshot named uc1_search_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:00:22+00:00",
+      "last_pass_at": "2026-10-14T13:00:22+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "4b3f3da6c44327a23a9941ad39d8a02f34f4e62db4739fd154eb36f8b76fdadf": {
+      "key": "4b3f3da6c44327a23a9941ad39d8a02f34f4e62db4739fd154eb36f8b76fdadf",
+      "step_text": "Select the sort option \"{q1}\" from the sort dropdown",
+      "normalized_step": "select the sort option {q1} from the sort dropdown",
+      "page_fingerprint": "/s|1d0d838d5f9b853b",
+      "plan": [
+        {
+          "action": "wait",
+          "seconds": 2,
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        },
+        {
+          "action": "select",
+          "selector": "#searchDropdownBox",
+          "value": "{q1}",
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:05:32+00:00",
+      "last_pass_at": "2026-10-14T13:05:32+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "eed5c04cc345aec9320ff1a6c78ac1480f9f27717139b4d9d59a8321d61dad3e": {
+      "key": "eed5c04cc345aec9320ff1a6c78ac1480f9f27717139b4d9d59a8321d61dad3e",
+      "step_text": "Wait for the re-sorted results to load",
+      "normalized_step": "wait for the re-sorted results to load",
+      "page_fingerprint": "/s|13661f2a72b3183c",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#searchDropdownBox",
+          "description": "Wait for the re-sorted results to load"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:05:35+00:00",
+      "last_pass_at": "2026-10-14T13:05:35+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "06cd208a6f8920dac291aac3fcc303c39055ec5b48eb264d0eb44e6394bfb0ff": {
+      "key": "06cd208a6f8920dac291aac3fcc303c39055ec5b48eb264d0eb44e6394bfb0ff",
+      "step_text": "Extract the prices of the first visible results (save as sorted_prices)",
+      "normalized_step": "extract the prices of the first visible results (save as sorted_prices)",
+      "page_fingerprint": "/s|967ce17853f8000b",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#searchDropdownBox",
+          "all": false,
+          "save_as": "sorted_prices",
+          "description": "Extract the prices of the first visible results (save as sorted_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:05:49+00:00",
+      "last_pass_at": "2026-10-14T13:05:49+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "b9d2c9cdd506f7075b238d3c3836b245446579882dd62c06246e520b19a10dc4": {
+      "key": "b9d2c9cdd506f7075b238d3c3836b245446579882dd62c06246e520b19a10dc4",
+      "step_text": "Take a screenshot named uc2_sorted_results",
+      "normalized_step": "take a screenshot named uc2_sorted_results",
+      "page_fingerprint": "/s|967ce17853f8000b",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc2_sorted_results",
+          "description": "Take a screenshot named uc2_sorted_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:05:59+00:00",
+      "last_pass_at": "2026-10-14T13:05:59+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "1c52a0e8d97347e1a78a41c2257aeffe49e9964911a27c8270624bffb0f191c7": {
+      "key": "1c52a0e8d97347e1a78a41c2257aeffe49e9964911a27c8270624bffb0f191c7",
+      "step_text": "Wait for the product page to load (add-to-cart button visible)",
+      "normalized_step": "wait for the product page to load (add-to-cart button visible)",
+      "page_fingerprint": "/all-new-amazon-kindle-paperwhite/dp/b0dktz6592/ref=sr_1_1|59b394eb9c9caeed",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#nav-assistant-links-heading",
+          "description": "Wait for the product page to load (add-to-cart button visible)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:15:56+00:00",
+      "last_pass_at": "2026-10-14T13:15:56+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "e9af0ac9c1b5fd5d10ce234cbab86f14dc7da27bf40325b59be96154889452e9": {
+      "key": "e9af0ac9c1b5fd5d10ce234cbab86f14dc7da27bf40325b59be96154889452e9",
+      "step_text": "Extract the product title on the product page (save as product_title)",
+      "normalized_step": "extract the product title on the product page (save as product_title)",
+      "page_fingerprint": "/all-new-amazon-kindle-paperwhite/dp/b0dktz6592/ref=sr_1_1|c7fe1666f1bd9959",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#a-page",
+          "description": "Extract the product title on the product page (save as product_title)"
+        },
+        {
+          "action": "extract",
+          "selector": "#a-page",
+          "all": false,
+          "save_as": "product_title",
+          "description": "Extract the product title on the product page (save as product_title)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:16:09+00:00",
+      "last_pass_at": "2026-10-14T13:16:09+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "50f30186046d618e55c5566200b4ab0aef6567599a5cae1bb41eedce5dc78a77": {
+      "key": "50f30186046d618e55c5566200b4ab0aef6567599a5cae1bb41eedce5dc78a77",
+      "step_text": "Click the Add to Cart button",
+      "normalized_step": "click the add to cart button",
+      "page_fingerprint": "/all-new-amazon-kindle-paperwhite/dp/b0dktz6592/ref=sr_1_1|c7fe1666f1bd9959",
+      "plan": [
+        {
+          "action": "click",
+          "selector": "#nav-assist-add-to-cart",
+          "description": "Click the Add to Cart button"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:16:23+00:00",
+      "last_pass_at": "2026-10-14T13:16:23+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "b1246fb342f4f5ccff0b805b42c2bf857be6b5ea6fe167d48a1368c37de64287": {
+      "key": "b1246fb342f4f5ccff0b805b42c2bf857be6b5ea6fe167d48a1368c37de64287",
+      "step_text": "Wait {n1} seconds for the cart to update",
+      "normalized_step": "wait {n1} seconds for the cart to update",
+      "page_fingerprint": "/all-new-amazon-kindle-paperwhite/dp/b0dktz6592/ref=sr_1_1|97be74e881fa4a99",
+      "plan": [
+        {
+          "action": "wait",
+          "seconds": 4,
+          "description": "Wait {n1} seconds for the cart to update"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:16:35+00:00",
+      "last_pass_at": "2026-10-14T13:16:35+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "13016e14901913104ff315bdc412454c06d187399ac4efe1ed2e110319bfa5bf": {
+      "key": "13016e14901913104ff315bdc412454c06d187399ac4efe1ed2e110319bfa5bf",
+      "step_text": "Extract the cart count badge (save as cart_after)",
+      "normalized_step": "extract the cart count badge (save as cart_after)",
+      "page_fingerprint": "/all-new-amazon-kindle-paperwhite/dp/b0dktz6592/ref=sr_1_1|97be74e881fa4a99",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "div#icp-nav-flyout",
+          "all": false,
+          "save_as": "cart_after",
+          "description": "Extract the cart count badge (save as cart_after)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:17:00+00:00",
+      "last_pass_at": "2026-10-14T13:17:00+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "a297fe7475a8c2480c88a5981457619894a76f7970f0a07369b5ff6131c1282c": {
+      "key": "a297fe7475a8c2480c88a5981457619894a76f7970f0a07369b5ff6131c1282c",
+      "step_text": "Take a screenshot named uc3_cart",
+      "normalized_step": "take a screenshot named uc3_cart",
+      "page_fingerprint": "/all-new-amazon-kindle-paperwhite/dp/b0dktz6592/ref=sr_1_1|97be74e881fa4a99",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc3_cart",
+          "description": "Take a screenshot named uc3_cart"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:17:07+00:00",
+      "last_pass_at": "2026-10-14T13:17:07+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "ea0f975353baf5c90515da45bd2ffea0ab2ce33036d306c9cef3740edb70e11b": {
+      "key": "ea0f975353baf5c90515da45bd2ffea0ab2ce33036d306c9cef3740edb70e11b",
+      "step_text": "Extract the titles of the visible search results (save as result_titles)",
+      "normalized_step": "extract the titles of the visible search results (save as result_titles)",
+      "page_fingerprint": "/s|dd02bf4469efaef8",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#searchDropdownBox",
+          "all": false,
+          "save_as": "result_titles",
+          "description": "Extract the titles of the visible search results (save as result_titles)"
+        },
+        {
+          "action": "extract",
+          "selector": "#twotabsearchtextbox",
+          "all": false,
+          "save_as": "result_titles",
+          "description": "Extract the titles of the visible search results (save as result_titles)"
+        },
+        {
+          "action": "extract",
+          "selector": ".s-result-item",
+          "all": true,
+          "save_as": "result_titles",
+          "description": "Extract the titles of the visible search results (save as result_titles)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:17:56+00:00",
+      "last_pass_at": "2026-10-14T13:17:56+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "86410eff9c5955021b67a6319382a800230fba6dc86e760a7a13fef0629a973a": {
+      "key": "86410eff9c5955021b67a6319382a800230fba6dc86e760a7a13fef0629a973a",
+      "step_text": "Extract the prices of the visible search results (save as result_prices)",
+      "normalized_step": "extract the prices of the visible search results (save as result_prices)",
+      "page_fingerprint": "/s|1123a9cd3248d2d7",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "body",
+          "all": true,
+          "save_as": "result_prices",
+          "description": "Extract the prices of the visible search results (save as result_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:18:13+00:00",
+      "last_pass_at": "2026-10-14T13:18:13+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "402aec261d7f12c2569db03638085a3d3cf6d7705bb0da914adece587d0eed06": {
+      "key": "402aec261d7f12c2569db03638085a3d3cf6d7705bb0da914adece587d0eed06",
+      "step_text": "Take a screenshot named uc1_search_results",
+      "normalized_step": "take a screenshot named uc1_search_results",
+      "page_fingerprint": "/s|1123a9cd3248d2d7",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc1_search_results",
+          "description": "Take a screenshot named uc1_search_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:18:16+00:00",
+      "last_pass_at": "2026-10-14T13:18:16+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "d8679b4ac07ffc04150e8429f8e88ef2121e09740b0b57beed4e0c255a64d933": {
+      "key": "d8679b4ac07ffc04150e8429f8e88ef2121e09740b0b57beed4e0c255a64d933",
+      "step_text": "Select the sort option \"{q1}\" from the sort dropdown",
+      "normalized_step": "select the sort option {q1} from the sort dropdown",
+      "page_fingerprint": "/s|0af0dbace3b6f6de",
+      "plan": [
+        {
+          "action": "wait",
+          "seconds": 2,
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        },
+        {
+          "action": "select",
+          "selector": "#searchDropdownBox",
+          "value": "{q1}",
+          "description": "Select the sort option \"{q1}\" from the sort dropdown"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:18:53+00:00",
+      "last_pass_at": "2026-10-14T13:18:53+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "3d00f03cad8a863022bfcbcf567bf8c99a048605f82bd47c289201a1b7593eee": {
+      "key": "3d00f03cad8a863022bfcbcf567bf8c99a048605f82bd47c289201a1b7593eee",
+      "step_text": "Extract the prices of the first visible results (save as sorted_prices)",
+      "normalized_step": "extract the prices of the first visible results (save as sorted_prices)",
+      "page_fingerprint": "/s|18cbef7779c11644",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#searchDropdownBox",
+          "all": false,
+          "save_as": "sorted_prices",
+          "description": "Extract the prices of the first visible results (save as sorted_prices)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:18:56+00:00",
+      "last_pass_at": "2026-10-14T13:18:56+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "2a60fb66ff4439bc2233453d1fd98cf9c2069132c064ea5cb390e04b0c22cefc": {
+      "key": "2a60fb66ff4439bc2233453d1fd98cf9c2069132c064ea5cb390e04b0c22cefc",
+      "step_text": "Take a screenshot named uc2_sorted_results",
+      "normalized_step": "take a screenshot named uc2_sorted_results",
+      "page_fingerprint": "/s|aa73ad1ad80b0f79",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc2_sorted_results",
+          "description": "Take a screenshot named uc2_sorted_results"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:18:59+00:00",
+      "last_pass_at": "2026-10-14T13:18:59+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "c29580a371a925b5d8d9f850c1da9a43994ba8a624d0b1825e2ef95c420da747": {
+      "key": "c29580a371a925b5d8d9f850c1da9a43994ba8a624d0b1825e2ef95c420da747",
+      "step_text": "Wait for the product page to load (add-to-cart button visible)",
+      "normalized_step": "wait for the product page to load (add-to-cart button visible)",
+      "page_fingerprint": "/moca-smartshell-protective-paperwhite-landscape/dp/b0785dvlmb/ref=sr_1_2_sspa|6033178dcd78ff5b",
+      "plan": [
+        {
+          "action": "wait_for",
+          "selector": "#nav-assistant-links-heading",
+          "description": "Wait for the product page to load (add-to-cart button visible)"
+        },
+        {
+          "action": "wait",
+          "seconds": 4,
+          "description": "Wait for the product page to load (add-to-cart button visible)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:19:42+00:00",
+      "last_pass_at": "2026-10-14T13:19:42+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "cce84b53d4caf391c87c34e936665f15bb5c2d588c711470486460607fcc0315": {
+      "key": "cce84b53d4caf391c87c34e936665f15bb5c2d588c711470486460607fcc0315",
+      "step_text": "Extract the product title on the product page (save as product_title)",
+      "normalized_step": "extract the product title on the product page (save as product_title)",
+      "page_fingerprint": "/moca-smartshell-protective-paperwhite-landscape/dp/b0785dvlmb/ref=sr_1_2_sspa|7b03e6e4d284980a",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "h1#title",
+          "all": false,
+          "save_as": "product_title",
+          "description": "Extract the product title on the product page (save as product_title)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:19:46+00:00",
+      "last_pass_at": "2026-10-14T13:19:46+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "8c007000e26e5fb90fdf50b90536f3476fb955badce739f87f71997cbbbe864b": {
+      "key": "8c007000e26e5fb90fdf50b90536f3476fb955badce739f87f71997cbbbe864b",
+      "step_text": "Click the Add to Cart button",
+      "normalized_step": "click the add to cart button",
+      "page_fingerprint": "/moca-smartshell-protective-paperwhite-landscape/dp/b0785dvlmb/ref=sr_1_2_sspa|7b03e6e4d284980a",
+      "plan": [
+        {
+          "action": "click",
+          "selector": "#nav-assist-add-to-cart",
+          "description": "Click the Add to Cart button"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:19:51+00:00",
+      "last_pass_at": "2026-10-14T13:19:51+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "c21d5e00c20b323a7ecfd80a095aa3a9d8f174b4d07cd1749b5601232afb7db0": {
+      "key": "c21d5e00c20b323a7ecfd80a095aa3a9d8f174b4d07cd1749b5601232afb7db0",
+      "step_text": "Extract the cart count badge (save as cart_after)",
+      "normalized_step": "extract the cart count badge (save as cart_after)",
+      "page_fingerprint": "/cart/add-to-cart/ref=dp_start-bbf_1_glance|58b730ca9aa69911",
+      "plan": [
+        {
+          "action": "extract",
+          "selector": "#nav-cart-count-container",
+          "all": false,
+          "save_as": "cart_after",
+          "description": "Extract the cart count badge (save as cart_after)"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:20:07+00:00",
+      "last_pass_at": "2026-10-14T13:20:07+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    },
+    "3d8769dae456bd6350efe97f70aeee35266694e4defa3ccb25d53039f3a05440": {
+      "key": "3d8769dae456bd6350efe97f70aeee35266694e4defa3ccb25d53039f3a05440",
+      "step_text": "Take a screenshot named uc3_cart",
+      "normalized_step": "take a screenshot named uc3_cart",
+      "page_fingerprint": "/cart/smart-wagon|58b730ca9aa69911",
+      "plan": [
+        {
+          "action": "screenshot",
+          "name": "uc3_cart",
+          "description": "Take a screenshot named uc3_cart"
+        }
+      ],
+      "version": 1,
+      "pass_count": 1,
+      "failure_count": 0,
+      "created_at": "2026-10-14T13:20:09+00:00",
+      "last_pass_at": "2026-10-14T13:20:09+00:00",
+      "source": "llm",
+      "model": "meta/llama-3.2-11b-vision-instruct"
+    }
+  }
+}

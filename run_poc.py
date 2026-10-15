@@ -35,12 +35,29 @@ PARALLEL_MODES = ("off", "files", "usecases", "all")
 
 def _log(msg: str = "") -> None:
     """Process-aware stdout (Playwright sync is not thread-safe; we use processes)."""
-    print(f"[pid={os.getpid()}] {msg}", flush=True)
+    text = f"[pid={os.getpid()}] {msg}"
+    try:
+        print(text, flush=True)
+    except UnicodeEncodeError:
+        print(text.encode("ascii", "replace").decode("ascii"), flush=True)
+
+
+def _avg_ms(values: list) -> str:
+    if not values:
+        return "n/a"
+    return f"{sum(values) / len(values):.0f} ms"
+
+
+def verdict_counts(results: list) -> tuple[int, int]:
+    passed = sum(1 for r in results if r.get("validation", {}).get("verdict") == "PASS")
+    return passed, len(results) - passed
 
 
 def render_markdown(results: list) -> str:
+    passed, failed = verdict_counts(results)
     lines = [f"# SourceaAI Report - {datetime.now():%Y-%m-%d %H:%M}",
-             "", "Engine: NVIDIA Build (NIM) | Runner: Playwright | Pattern: Plan -> Execute -> Validate", ""]
+             "", "Engine: NVIDIA Build (NIM) | Runner: Playwright | Pattern: Plan -> Execute -> Validate",
+             f"Passed: {passed} | Failed: {failed} | Total: {len(results)}", ""]
     for r in results:
         v = r["validation"]
         lines.append(f"## {r['use_case']} — **{v.get('verdict','?')}**")
@@ -51,7 +68,44 @@ def render_markdown(results: list) -> str:
         for rule in v.get("rules", []):
             lines.append(f"- [{rule['result']}] {rule['rule']} — _{rule.get('evidence','')}_")
         lines.append(f"\n> {v.get('summary','')}\n")
+    lines.extend(_memory_summary(results))
     return "\n".join(lines)
+
+
+def _memory_summary(results: list) -> list:
+    blocks = [r["memory"] for r in results if r.get("memory")]
+    if not blocks:
+        return []
+    counts = {"CACHE_HIT": 0, "CACHE_MISS": 0, "HEALED_FROM_CACHE": 0, "REPLANNED": 0, "SELF_HEALED": 0}
+    made = avoided = tokens = 0
+    cached_ms: list = []
+    planned_ms: list = []
+    for block in blocks:
+        for event in block.get("events") or []:
+            name = event.get("event")
+            if name in counts:
+                counts[name] += 1
+        made += int(block.get("llm_calls_made") or 0)
+        avoided += int(block.get("llm_calls_avoided") or 0)
+        tokens += int(block.get("tokens_saved_estimate") or 0)
+        cached_ms.extend(block.get("cached_ms") or [])
+        planned_ms.extend(block.get("planned_ms") or [])
+    total = sum(counts.values())
+    reused = counts["CACHE_HIT"] + counts["HEALED_FROM_CACHE"]
+    rate = (100.0 * reused / total) if total else 0.0
+    return [
+        "## Plan memory",
+        f"- Mode: {blocks[0].get('mode', 'on')}",
+        f"- Cache hit rate: {rate:.0f}% "
+        f"({reused} reused / {total} steps; hits {counts['CACHE_HIT']}, "
+        f"healed from cache {counts['HEALED_FROM_CACHE']}, "
+        f"misses {counts['CACHE_MISS']}, replanned {counts['REPLANNED']}, "
+        f"self-healed {counts['SELF_HEALED']})",
+        f"- LLM calls made: {made} | avoided: {avoided}",
+        f"- Estimated tokens saved: {tokens} (800 per avoided planner call)",
+        f"- Average step time: cached {_avg_ms(cached_ms)} | planned {_avg_ms(planned_ms)}",
+        "",
+    ]
 
 
 def resolve_parallel_config(args) -> tuple[str, int]:
@@ -85,7 +139,13 @@ def load_usecase_files() -> list[tuple[Path, list]]:
         data = yaml.safe_load(path.read_text(encoding="utf-8")) or []
         if not isinstance(data, list):
             sys.exit(f"Use-case file must be a YAML list: {path}")
-        files.append((path, data))
+        tagged = []
+        for item in data:
+            if isinstance(item, dict):
+                tagged.append({**item, "_suite": path.stem})
+            else:
+                tagged.append(item)
+        files.append((path, tagged))
     if not files:
         sys.exit(f"No use-case YAML files found in {USECASE_DIR}/")
     return files
@@ -98,8 +158,46 @@ def filter_use_cases(use_cases: list, only: str | None) -> list:
     return filtered
 
 
-def run_use_case(uc: dict, headed: bool, slow_mo: int) -> dict:
-    """Plan -> execute -> validate one use case. Own NimClient + browser per process."""
+def run_use_case(uc: dict, headed: bool, slow_mo: int, replan: bool = False,
+                 replan_step: str | None = None) -> dict:
+    """Plan -> execute -> validate one use case. Own NimClient + browser per process.
+
+    PLAN_MEMORY=off keeps the original single planner call. on/readonly replay
+    stored steps and call the planner only on a miss.
+    """
+    mem_mode = os.getenv("PLAN_MEMORY", "on").strip().lower()
+    if mem_mode not in ("on", "off", "readonly"):
+        sys.exit(f"Invalid PLAN_MEMORY '{mem_mode}'. Choose from: on, off, readonly")
+    if mem_mode == "off":
+        return _run_use_case_direct(uc, headed, slow_mo)
+
+    from memory.plan_store import PlanStore
+    from memory.runner import run_with_memory
+
+    nim = NimClient()
+    _log(f"=== {uc['name']} ===")
+    env_headless = os.getenv("HEADLESS", "true").lower() != "false"
+    execu = Executor(nim, headless=(not headed) and env_headless, slow_mo=slow_mo)
+    store = PlanStore(uc.get("_suite") or "default")
+    try:
+        result = run_with_memory(
+            uc, nim, execu, store,
+            mode=mem_mode, replan=replan, replan_step=replan_step, log=_log,
+        )
+    except Exception as exc:
+        _log(f"        VERDICT: FAIL  - {exc}")
+        return {
+            "use_case": uc["name"],
+            "execution": {"execution_status": "failed", "captured": {}, "steps": [], "heals": []},
+            "validation": {"verdict": "FAIL", "rules": [], "summary": str(exc)},
+        }
+    verdict = result["validation"]
+    _log(f"        VERDICT: {verdict.get('verdict')}  - {verdict.get('summary','')}")
+    return result
+
+
+def _run_use_case_direct(uc: dict, headed: bool, slow_mo: int) -> dict:
+    """Original path: one planner call for the whole use case."""
     nim = NimClient()
     _log(f"=== {uc['name']} ===")
     _log("  [1/3] Planning with NIM ...")
@@ -125,29 +223,33 @@ def run_use_case(uc: dict, headed: bool, slow_mo: int) -> dict:
 def _run_indexed(payload: dict) -> tuple[int, dict]:
     """Picklable worker entry for ProcessPoolExecutor (Windows-safe)."""
     return payload["index"], run_use_case(
-        payload["uc"], payload["headed"], payload["slow_mo"]
+        payload["uc"], payload["headed"], payload["slow_mo"],
+        payload.get("replan", False), payload.get("replan_step"),
     )
 
 
-def run_sequential(use_cases: list, headed: bool, slow_mo: int) -> list:
+def run_sequential(use_cases: list, headed: bool, slow_mo: int,
+                   replan: bool = False, replan_step: str | None = None) -> list:
     results = []
     for uc in use_cases:
-        results.append(run_use_case(uc, headed, slow_mo))
+        results.append(run_use_case(uc, headed, slow_mo, replan, replan_step))
         time.sleep(3)  # polite to free-tier rate limit between cases
     return results
 
 
-def run_parallel_pool(use_cases: list, headed: bool, slow_mo: int, workers: int) -> list:
+def run_parallel_pool(use_cases: list, headed: bool, slow_mo: int, workers: int,
+                      replan: bool = False, replan_step: str | None = None) -> list:
     """Run use cases in parallel processes (true concurrent Playwright browsers)."""
     if not use_cases:
         return []
     if len(use_cases) == 1 or workers == 1:
-        return [run_use_case(uc, headed, slow_mo) for uc in use_cases]
+        return [run_use_case(uc, headed, slow_mo, replan, replan_step) for uc in use_cases]
 
     n_workers = min(workers, len(use_cases))
     _log(f"Starting ProcessPoolExecutor with {n_workers} worker(s) ...")
     payloads = [
-        {"index": i, "uc": uc, "headed": headed, "slow_mo": slow_mo}
+        {"index": i, "uc": uc, "headed": headed, "slow_mo": slow_mo,
+         "replan": replan, "replan_step": replan_step}
         for i, uc in enumerate(use_cases)
     ]
     indexed: dict[int, dict] = {}
@@ -166,13 +268,16 @@ def _run_file_worker(payload: dict) -> tuple[str, list]:
     use_cases = payload["use_cases"]
     headed = payload["headed"]
     slow_mo = payload["slow_mo"]
+    replan = payload.get("replan", False)
+    replan_step = payload.get("replan_step")
     _log(f"--- File: {path_name} ({len(use_cases)} use case(s), sequential in this process) ---")
-    file_results = [run_use_case(uc, headed, slow_mo) for uc in use_cases]
+    file_results = [run_use_case(uc, headed, slow_mo, replan, replan_step) for uc in use_cases]
     return path_name, file_results
 
 
 def run_files_parallel(
-    file_groups: list[tuple[Path, list]], headed: bool, slow_mo: int, workers: int
+    file_groups: list[tuple[Path, list]], headed: bool, slow_mo: int, workers: int,
+    replan: bool = False, replan_step: str | None = None,
 ) -> list:
     """YAML files in parallel processes; use cases inside each file stay sequential."""
     active = [(path, ucs) for path, ucs in file_groups if ucs]
@@ -182,7 +287,7 @@ def run_files_parallel(
         results = []
         for path, ucs in active:
             _log(f"--- File: {path.name} ({len(ucs)} use case(s), sequential) ---")
-            results.extend(run_use_case(uc, headed, slow_mo) for uc in ucs)
+            results.extend(run_use_case(uc, headed, slow_mo, replan, replan_step) for uc in ucs)
         return results
 
     n_workers = min(workers, len(active))
@@ -193,6 +298,8 @@ def run_files_parallel(
             "use_cases": ucs,
             "headed": headed,
             "slow_mo": slow_mo,
+            "replan": replan,
+            "replan_step": replan_step,
         }
         for path, ucs in active
     ]
@@ -210,7 +317,8 @@ def run_files_parallel(
 
 
 def run_usecases_parallel(
-    file_groups: list[tuple[Path, list]], headed: bool, slow_mo: int, workers: int
+    file_groups: list[tuple[Path, list]], headed: bool, slow_mo: int, workers: int,
+    replan: bool = False, replan_step: str | None = None,
 ) -> list:
     """YAML files sequential; use cases within each YAML in parallel processes."""
     results = []
@@ -218,11 +326,13 @@ def run_usecases_parallel(
         if not use_cases:
             continue
         _log(f"--- File: {path.name} ({len(use_cases)} use case(s), parallel) ---")
-        results.extend(run_parallel_pool(use_cases, headed, slow_mo, workers))
+        results.extend(run_parallel_pool(use_cases, headed, slow_mo, workers, replan, replan_step))
     return results
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description="SourceaAI — plan / execute / validate")
     ap.add_argument("--headed", action="store_true", help="run with visible browser")
     ap.add_argument("--only", help="run use cases by name prefix, e.g. UC2")
@@ -240,6 +350,10 @@ def main():
         default=None,
         help="max parallel workers (overrides PARALLEL_WORKERS env, default 2)",
     )
+    ap.add_argument("--replan", action="store_true",
+                    help="ignore plan memory and refresh every step")
+    ap.add_argument("--replan-step", default=None, metavar="TEXT",
+                    help="refresh one English step; other steps still use memory")
     args = ap.parse_args()
 
     mode, workers = resolve_parallel_config(args)
@@ -252,30 +366,38 @@ def main():
         sys.exit(f"No use case matching '{args.only}'")
 
     all_ucs = [uc for _, ucs in file_groups for uc in ucs]
+    mem_mode = os.getenv("PLAN_MEMORY", "on")
     print(
-        f"Parallel mode: {mode} | workers: {workers} | "
+        f"Parallel mode: {mode} | workers: {workers} | plan memory: {mem_mode} | "
         f"files: {len(file_groups)} | use cases: {len(all_ucs)}"
     )
 
     REPORT_DIR.mkdir(exist_ok=True)
 
     if mode == "off":
-        results = run_sequential(all_ucs, args.headed, slow_mo)
+        results = run_sequential(all_ucs, args.headed, slow_mo, args.replan, args.replan_step)
     elif mode == "files":
-        results = run_files_parallel(file_groups, args.headed, slow_mo, workers)
+        results = run_files_parallel(
+            file_groups, args.headed, slow_mo, workers, args.replan, args.replan_step
+        )
     elif mode == "usecases":
-        results = run_usecases_parallel(file_groups, args.headed, slow_mo, workers)
+        results = run_usecases_parallel(
+            file_groups, args.headed, slow_mo, workers, args.replan, args.replan_step
+        )
     else:  # all
-        results = run_parallel_pool(all_ucs, args.headed, slow_mo, workers)
+        results = run_parallel_pool(
+            all_ucs, args.headed, slow_mo, workers, args.replan, args.replan_step
+        )
 
     (REPORT_DIR / "results.json").write_text(
         json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8"
     )
     md = render_markdown(results)
     (REPORT_DIR / "report.md").write_text(md, encoding="utf-8")
-    print(f"\nDone. Reports in {REPORT_DIR}/ (report.md, results.json, screenshots)")
-    failed = any(r["validation"].get("verdict") != "PASS" for r in results)
-    sys.exit(1 if failed else 0)
+    passed, failed_n = verdict_counts(results)
+    print(f"\nPassed: {passed} | Failed: {failed_n} | Total: {len(results)}")
+    print(f"Done. Reports in {REPORT_DIR}/ (report.md, results.json, screenshots)")
+    sys.exit(1 if failed_n else 0)
 
 
 if __name__ == "__main__":

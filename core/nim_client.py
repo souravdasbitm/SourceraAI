@@ -11,6 +11,8 @@ load_dotenv()  # reads .env from project root; real env vars still take preceden
 
 from openai import OpenAI
 
+from core.llm_json import loads_llm_json
+
 NIM_BASE_URL = os.getenv("NIM_BASE_URL", "https://integrate.api.nvidia.com/v1")
 NIM_API_KEY = os.getenv("NVIDIA_API_KEY", "")
 NIM_MODEL = os.getenv("NIM_MODEL", "meta/llama-3.2-11b-vision-instruct")
@@ -55,20 +57,26 @@ class NimClient:
 
     def chat_json(self, system: str, user: str, max_tokens: int = 2048) -> dict:
         """Chat completion that must return JSON. Strips markdown fences defensively."""
-        raw = self.chat(
-            system + "\nRespond ONLY with valid JSON. No markdown, no preamble.",
-            user,
-            max_tokens=max_tokens,
-        )
-        clean = raw.strip()
-        if clean.startswith("```"):
-            clean = clean.split("```")[1]
-            if clean.startswith("json"):
-                clean = clean[4:]
-        # last-resort: find first { ... last }
-        if not clean.strip().startswith(("{", "[")):
-            start = clean.find("{")
-            end = clean.rfind("}")
-            if start != -1 and end != -1:
-                clean = clean[start : end + 1]
-        return json.loads(clean)
+        last_error = None
+        for attempt in range(2):
+            raw = self.chat(
+                system + "\nRespond ONLY with valid JSON. No markdown, no preamble.",
+                user,
+                max_tokens=max_tokens,
+            )
+            clean = raw.strip()
+            if clean.startswith("```"):
+                clean = clean.split("```")[1]
+                if clean.startswith("json"):
+                    clean = clean[4:]
+            if not clean.strip().startswith(("{", "[")):
+                start = clean.find("{")
+                end = clean.rfind("}")
+                if start != -1 and end != -1:
+                    clean = clean[start : end + 1]
+            try:
+                return loads_llm_json(clean)
+            except json.JSONDecodeError as exc:
+                last_error = exc
+                print(f"  [NIM] invalid JSON, retrying ({attempt + 1}/2) ...")
+        raise last_error
